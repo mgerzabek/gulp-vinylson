@@ -2,7 +2,7 @@ const { Transform } = require('stream')
 const PluginError = require('plugin-error')
 const replaceExtension = require('replace-ext')
 
-const PLUGIN_NAME = 'gulp-klartext'
+const PLUGIN_NAME = 'gulp-vinylson'
 
 const defaultOptions = {
   ext: '.json'
@@ -20,9 +20,6 @@ module.exports = (options = {}) =>
     objectMode: true,
     transform(file, enc, callback)
     {
-      const markdown = new MarkdownIt(options)
-      markdown.use(plainText)
-
       if (file.isNull())
       {
         return callback(null, file)
