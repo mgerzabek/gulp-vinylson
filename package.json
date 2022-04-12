@@ -1,0 +1,28 @@
+{
+  "name": "gulp-vinylson",
+  "version": "0.0.1",
+  "description": "Extract vinyl meta data to json",
+  "license": "MIT",
+  "repository": "https://github.com/mgerzabek/gulp-vinylson",
+  "author": {
+    "name": "Michael Gerzabek",
+    "email": "michael.gerzabek@gmail.com"
+  },
+  "scripts": {
+    "lint": "eslint ./index.js",
+    "test": "mocha"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulp vinyl json"
+  ],
+  "dependencies": {
+    "plugin-error": "^1.0.1",
+    "replace-ext": "^2.0.0"
+  }
+}
