@@ -34,9 +34,21 @@ module.exports = (options = {}) =>
       {
         file.path = replaceExtension(file.path, options.ext)
 
-        const result = file.page
-        result['body'] = file.contents.toString()
-        file.contents = Buffer.from(JSON.stringify(result))
+        const result = JSON.stringify({
+          id: file.page.id,
+          type: file.page.type,
+          title: file.page.title,
+          description: file.page.description,
+          category: file.page.category,
+          akteure: file.page.akteure,
+          locations: file.page.locations,
+          periods: file.page.periods,
+          keywords: file.page.keywords,
+          folgezettel: file.page.folgezettel,
+          body: file.contents.toString()
+        })
+
+        file.contents = Buffer.from(result)
         return callback(null, file)
       }
 
