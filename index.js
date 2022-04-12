@@ -35,7 +35,7 @@ module.exports = (options = {}) =>
         file.path = replaceExtension(file.path, options.ext)
 
         const result = file.page
-        result['body'] = file.contents
+        result['body'] = file.contents.toString()
         file.contents = Buffer.from(JSON.stringify(result))
         return callback(null, file)
       }
