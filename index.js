@@ -32,9 +32,9 @@ module.exports = (options = {}) =>
             if (typeof path !== 'string') return path;
 
             var output = [];
-            path.split('.').forEach(function (item, index)
+            path.split('.').forEach(function (item)
             {
-              output.push(key);
+              output.push(item);
             });
 
             return output;
