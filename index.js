@@ -4,17 +4,8 @@ const replaceExtension = require('replace-ext')
 
 const PLUGIN_NAME = 'gulp-vinylson'
 
-const defaultOptions = {
-  ext: '.json'
-}
-
 module.exports = (options = {}) =>
 {
-
-  options = {
-    ...defaultOptions,
-    ...options
-  }
 
   return new Transform({
     objectMode: true,
@@ -32,23 +23,47 @@ module.exports = (options = {}) =>
 
       if (file.isBuffer())
       {
-        file.path = replaceExtension(file.path, options.ext)
+        file.path = replaceExtension(file.path, '.json')
 
-        const result = JSON.stringify({
-          id: file.page.id,
-          type: file.page.type,
-          title: file.page.title,
-          description: file.page.description,
-          category: file.page.category,
-          akteure: file.page.akteure,
-          locations: file.page.locations,
-          periods: file.page.periods,
-          keywords: file.page.keywords,
-          folgezettel: file.page.folgezettel,
-          body: file.contents.toString()
-        })
+        var get = function (obj, path, def)
+        {
+          var stringToPath = function (path)
+          {
+            if (typeof path !== 'string') return path;
 
-        file.contents = Buffer.from(result)
+            var output = [];
+            path.split('.').forEach(function (item, index)
+            {
+              output.push(key);
+            });
+
+            return output;
+          };
+
+          path = stringToPath(path);
+
+          var current = obj;
+          for (var i = 0; i < path.length; i++)
+          {
+            if (!current[ path[ i ] ]) return def;
+
+            current = current[ path[ i ] ];
+          }
+
+          return current;
+        };
+
+        const result = {}
+        for (const [ key, value ] of Object.entries(options))
+        {
+          let v = get(file, value.property, value.default)
+          if (v)
+          { 
+            result[ key ] = get(value, 'toString', false) ? v.toString() : v 
+          }
+        }
+
+        file.contents = Buffer.from(JSON.stringify(result))
         return callback(null, file)
       }
 
