@@ -54,12 +54,12 @@ module.exports = (options = {}) =>
         };
 
         const result = {}
-        for (const [ key, value ] of Object.entries(options))
+        for (const [ key, entry ] of Object.entries(options))
         {
-          let v = get(file, value.property, value.default)
-          if (v)
+          let value = get(file, entry.property, entry.default)
+          if (value)
           { 
-            result[ key ] = get(value, 'toString', false) ? v.toString() : v 
+            result[ key ] = get(entry, 'toString', false) ? value.toString() : value 
           }
         }
 
